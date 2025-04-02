@@ -4,7 +4,7 @@ import com.dev.spring.produtosapi.model.Produto;
 import com.dev.spring.produtosapi.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @RestController //requisições REST
@@ -33,11 +33,25 @@ public class ProdutoController {
     //retornando o produto pelo id
     @GetMapping("/{id}")
     public Produto obterPorId(@PathVariable("id") String id) {
-        //primeira forma de se fazer
-//        Optional<Produto> produto = produtoRepository.findById(id);
-//        return produto.isPresent() ? produto.get() : null;
-
-        //forma mais facil de se fazer
         return produtoRepository.findById(id).orElse(null);
+    }
+
+    //deletando um produto
+    @DeleteMapping("{id}")
+    public void deletar(@PathVariable("id") String id) {
+        produtoRepository.deleteById(id);
+    }
+
+    //atualizando um produto
+    @PutMapping("{id}")
+    public void atualizar(@PathVariable("id") String id,
+                          @RequestBody Produto produto) {
+        produto.setId(id);
+        produtoRepository.save(produto);
+    }
+
+    @GetMapping
+    public List<Produto> buscar(@RequestParam("nome") String nome) {
+       return produtoRepository.findByNome(nome);
     }
 }
