@@ -1,0 +1,5 @@
+# Arquivos ignorados por padrão
+/shelf/
+/workspace.xml
+# CodeStream ignored files
+/../../API-Spring\.idea/codestream.xml
